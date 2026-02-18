@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-
+import 'package:go_router/go_router.dart';
 import '../../../db/app_db.dart';
 import '../../../shared/widgets/empty_state.dart';
 import '../data/finance_repository.dart';
@@ -33,8 +33,16 @@ class FinanceScreen extends ConsumerWidget {
             icon: const Icon(Icons.calendar_today),
             onPressed: () {
               final now = DateTime.now();
-              ref.read(financeMonthProvider.notifier).state = DateTime(now.year, now.month, 1);
+              ref.read(financeMonthProvider.notifier).state = DateTime(
+                now.year,
+                now.month,
+                1,
+              );
             },
+          ),
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () => context.push('/settings'),
           ),
         ],
       ),
@@ -44,8 +52,14 @@ class FinanceScreen extends ConsumerWidget {
           if (i == 1) context.go('/routine');
         },
         destinations: const [
-          NavigationDestination(icon: Icon(Icons.attach_money), label: 'Finanças'),
-          NavigationDestination(icon: Icon(Icons.check_circle_outline), label: 'Rotina'),
+          NavigationDestination(
+            icon: Icon(Icons.attach_money),
+            label: 'Finanças',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.check_circle_outline),
+            label: 'Rotina',
+          ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
@@ -69,9 +83,10 @@ class FinanceScreen extends ConsumerWidget {
               .fold<int>(0, (sum, t) => sum + t.amountCents);
           final balanceCents = incomeCents - expenseCents;
 
-          String money(int cents) =>
-              NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$')
-                  .format(cents / 100.0);
+          String money(int cents) => NumberFormat.currency(
+            locale: 'pt_BR',
+            symbol: 'R\$',
+          ).format(cents / 100.0);
 
           return Column(
             children: [
@@ -83,7 +98,10 @@ class FinanceScreen extends ConsumerWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Resumo do mês', style: Theme.of(context).textTheme.titleMedium),
+                        Text(
+                          'Resumo do mês',
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
                         const SizedBox(height: 12),
                         _line('Entradas', money(incomeCents)),
                         _line('Saídas', money(expenseCents)),
@@ -121,7 +139,9 @@ class FinanceScreen extends ConsumerWidget {
           Text(label),
           Text(
             value,
-            style: TextStyle(fontWeight: bold ? FontWeight.w700 : FontWeight.w500),
+            style: TextStyle(
+              fontWeight: bold ? FontWeight.w700 : FontWeight.w500,
+            ),
           ),
         ],
       ),
@@ -137,8 +157,10 @@ class _TransactionTile extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isIncome = item.type == 'income';
 
-    final money = NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$')
-        .format(item.amountCents / 100.0);
+    final money = NumberFormat.currency(
+      locale: 'pt_BR',
+      symbol: 'R\$',
+    ).format(item.amountCents / 100.0);
 
     return Dismissible(
       key: ValueKey(item.id),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-
+import 'package:drift/drift.dart' show Value;
 import '../../../db/app_db.dart';
 import '../data/finance_repository.dart';
 
@@ -120,7 +120,7 @@ class _TransactionFormScreenState extends ConsumerState<TransactionFormScreen> {
                       amountCents: _amountCents,
                       category: _category,
                       date: _date,
-                      note: _note,
+                      note: Value(_note),
                     ),
                   );
 

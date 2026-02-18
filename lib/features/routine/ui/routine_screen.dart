@@ -25,21 +25,33 @@ class RoutineScreen extends ConsumerWidget {
           IconButton(
             icon: const Icon(Icons.chevron_left),
             onPressed: () {
-              ref.read(routineDayProvider.notifier).state = day.subtract(const Duration(days: 1));
+              ref.read(routineDayProvider.notifier).state = day.subtract(
+                const Duration(days: 1),
+              );
             },
           ),
           IconButton(
             icon: const Icon(Icons.today),
             onPressed: () {
               final now = DateTime.now();
-              ref.read(routineDayProvider.notifier).state = DateTime(now.year, now.month, now.day);
+              ref.read(routineDayProvider.notifier).state = DateTime(
+                now.year,
+                now.month,
+                now.day,
+              );
             },
           ),
           IconButton(
             icon: const Icon(Icons.chevron_right),
             onPressed: () {
-              ref.read(routineDayProvider.notifier).state = day.add(const Duration(days: 1));
+              ref.read(routineDayProvider.notifier).state = day.add(
+                const Duration(days: 1),
+              );
             },
+          ),
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () => context.push('/settings'),
           ),
         ],
       ),
@@ -49,8 +61,14 @@ class RoutineScreen extends ConsumerWidget {
           if (i == 0) context.go('/finance');
         },
         destinations: const [
-          NavigationDestination(icon: Icon(Icons.attach_money), label: 'Finanças'),
-          NavigationDestination(icon: Icon(Icons.check_circle_outline), label: 'Rotina'),
+          NavigationDestination(
+            icon: Icon(Icons.attach_money),
+            label: 'Finanças',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.check_circle_outline),
+            label: 'Rotina',
+          ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
